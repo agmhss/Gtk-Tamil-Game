@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>தமிழ் வார்த்தை விளையாட்டு | Tamil Blitz Quiz</title>
+  <title>தமிழ் வேக வினா | Tamil Blitz Quiz</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Tamil:wght@400;700&family=Poppins:wght@600&display=swap');
 
@@ -28,46 +28,14 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
-    h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
-    }
+    h1 { font-size: 2.5em; margin-bottom: 10px; text-shadow: 2px 2px 8px rgba(0,0,0,0.6); }
+    .score-timer { font-size: 1.4em; margin: 15px 0; display: flex; justify-content: space-around; }
+    .timer { color: #ffd93d; font-weight: bold; }
 
-    .score-timer {
-      font-size: 1.4em;
-      margin: 15px 0;
-      display: flex;
-      justify-content: space-around;
-    }
+    .progress { width: 100%; height: 12px; background: rgba(255,255,255,0.3); border-radius: 6px; margin: 20px 0; overflow: hidden; }
+    .progress-bar { width: 0%; height: 100%; background: #4caf50; transition: width 0.4s ease; }
 
-    .timer {
-      color: #ffd93d;
-      font-weight: bold;
-    }
-
-    .progress {
-      width: 100%;
-      height: 12px;
-      background: rgba(255,255,255,0.3);
-      border-radius: 6px;
-      margin: 20px 0;
-      overflow: hidden;
-    }
-
-    .progress-bar {
-      width: 0%;
-      height: 100%;
-      background: #4caf50;
-      transition: width 0.4s ease;
-    }
-
-    .question {
-      font-size: 2.2em;
-      margin: 30px 0;
-      min-height: 80px;
-      font-weight: 700;
-    }
+    .question { font-size: 2.4em; margin: 30px 0; min-height: 80px; font-weight: 700; }
 
     .options {
       display: grid;
@@ -77,7 +45,7 @@
     }
 
     button {
-      padding: 15px;
+      padding: 18px;
       font-size: 1.3em;
       background: #fff;
       color: #333;
@@ -85,58 +53,34 @@
       border-radius: 12px;
       cursor: pointer;
       transition: all 0.3s;
-      font-family: 'Noto Sans Tamil', sans-serif;
     }
 
-    button:hover {
-      background: #ffd93d;
-      transform: scale(1.05);
-    }
-
-    button.correct {
-      background: #4caf50 !important;
-      color: white;
-    }
-
-    button.wrong {
-      background: #f44336 !important;
-      color: white;
-    }
-
-    .start-screen, .game-over {
-      display: none;
-    }
+    button:hover { background: #ffd93d; transform: scale(1.05); }
+    button.correct { background: #4caf50 !important; color: white; }
+    button.wrong { background: #f44336 !important; color: white; }
 
     .start-btn {
       background: #4caf50;
       color: white;
       font-size: 1.6em;
-      padding: 15px 40px;
+      padding: 15px 50px;
       margin-top: 30px;
     }
 
-    .final-score {
-      font-size: 3em;
-      margin: 20px 0;
-    }
+    .final-score { font-size: 3.5em; margin: 20px 0; }
+    .comment { font-size: 1.6em; margin: 20px 0; font-style: italic; }
 
-    .comment {
-      font-size: 1.5em;
-      margin: 20px 0;
-      font-style: italic;
-    }
-
-    .hidden { display: none; }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
 
 <div class="container">
   <!-- Start Screen -->
-  <div id="startScreen" class="start-screen">
+  <div id="startScreen">
     <h1>தமிழ் வேக வினா!</h1>
     <p>30 வினாடிகளில் சரியான பொருளைத் தேர்ந்தெடு!</p>
-    <p>10 கேள்விகள் • ஒவ்வொரு சரியான பதிலுக்கு 10 புள்ளிகள்</p>
+    <p>10 கேள்விகள் • சரியான பதிலுக்கு 10 புள்ளிகள்</p>
     <button class="start-btn" onclick="startGame()">விளையாட தொடங்கு</button>
   </div>
 
@@ -144,84 +88,126 @@
   <div id="gameScreen" class="hidden">
     <div class="score-timer">
       <div>புள்ளிகள்: <span id="score">0</span></div>
-      <div class="timer">நேரம்: <span id="timer">30</span> விநாடிகள்</div>
+      <div>நேரம்: <span id="timer">30</span> விநா</div>
     </div>
     <div class="progress"><div id="progressBar" class="progress-bar"></div></div>
-    
-    <div class="question" id="questionText">கேள்வி ஏற்றுகிறது...</div>
-    
+    <div class="question" id="questionText"></div>
     <div class="options" id="options"></div>
   </div>
 
   <!-- Game Over Screen -->
-  <div id="gameOverScreen" class="game-over hidden">
+  <div id="gameOverScreen" class="hidden">
     <h1>விளையாட்டு முடிந்தது!</h1>
     <div class="final-score" id="finalScore">0</div>
-    <div class="comment" id="comment">நன்றாக விளையாடினீர்கள்! மீண்டும் முயற்சிக்கவும்!</div>
+    <div class="comment" id="comment"></div>
     <button class="start-btn" onclick="startGame()">மீண்டும் விளையாடு</button>
   </div>
 </div>
 
 <script>
-// Question Bank - 100 Tamil Vocabulary Questions
+// Full 100 Real Tamil Questions (no placeholders)
 const questionBank = [
-  {q: "நீர்", options: ["Water", "Fire", "Air", "Earth"], a: 0},
-  {q: "அக்கா", options: ["Mother", "Sister", "Brother", "Father"], a: 1},
-  {q: "புத்தகம்", options: ["Pen", "Book", "Bag", "Table"], a: 1},
-  {q: "வீடு", options: ["School", "Temple", "House", "Shop"], a: 2},
-  {q: "மரம்", options: ["Flower", "Tree", "Fruit", "Leaf"], a: 1},
-  {q: "சூரியன்", options: ["Moon", "Star", "Sun", "Cloud"], a: 2},
-  {q: "பறவை", options: ["Fish", "Bird", "Animal", "Insect"], a: 1},
-  {q: "கண்", options: ["Ear", "Nose", "Eye", "Mouth"], a: 2},
-  {q: "பால்", options: ["Water", "Tea", "Milk", "Juice"], a: 2},
-  {q: "நிலா", options: ["Sun", "Moon", "Star", "Planet"], a: 1},
-  {q: "ஆறு", options: ["Mountain", "River", "Lake", "Sea"], a: 1},
-  {q: "பூ", options: ["Leaf", "Fruit", "Flower", "Root"], a: 2},
-  {q: "கை", options: ["Leg", "Hand", "Head", "Neck"], a: 1},
-  {q: "வானம்", options: ["Earth", "Sky", "Water", "Fire"], a: 1},
-  {q: "உப்பு", options: ["Sugar", "Salt", "Chilli", "Oil"], a: 1},
-  {q: "மீன்", options: ["Bird", "Fish", "Snake", "Dog"], a: 1},
-  {q: "காற்று", options: ["Water", "Fire", "Wind", "Soil"], a: 2},
-  {q: "தீ", options: ["Water", "Fire", "Air", "Earth"], a: 1},
-  {q: "பள்ளி", options: ["Home", "School", "Hospital", "Market"], a: 1},
-  {q: "கோயில்", options: ["Church", "Temple", "Mosque", "School"], a: 1},
-  {q: "அம்மா", options: ["Father", "Mother", "Sister", "Grandma"], a: 1},
-  {q: "அப்பா", options: ["Mother", "Father", "Brother", "Uncle"], a: 1},
-  {q: "நண்பன்", options: ["Enemy", "Friend", "Teacher", "Doctor"], a: 1},
-  {q: "மலை", options: ["Hill", "River", "Plain", "Forest"], a: 0},
-  {q: "கடல்", options: ["River", "Lake", "Ocean", "Pond"], a: 2},
-  {q: "பழம்", options: ["Vegetable", "Fruit", "Grain", "Leaf"], a: 1},
-  {q: "காய்கறி", options: ["Fruit", "Vegetable", "Meat", "Fish"], a: 1},
-  {q: "பசு", options: ["Goat", "Cow", "Horse", "Elephant"], a: 1},
-  {q: "நாய்", options: ["Cat", "Dog", "Tiger", "Lion"], a: 1},
-  {q: "பூனை", options: ["Dog", "Cat", "Rat", "Rabbit"], a: 1},
-  // Add more up to 100... (shortened for example, you can expand)
-  {q: "சக்கரம்", options: ["Wheel", "Door", "Window", "Roof"], a: 0},
-  {q: "விளக்கு", options: ["Fan", "Light", "Table", "Chair"], a: 1},
-  {q: "பேனா", options: ["Pencil", "Pen", "Book", "Ruler"], a: 1},
-  {q: "மேசை", options: ["Chair", "Table", "Bed", "Cupboard"], a: 1},
-  {q: "நாற்காலி", options: ["Table", "Chair", "Sofa", "Bed"], a: 1},
-  {q: "கணினி", options: ["Radio", "Television", "Computer", "Phone"], a: 2},
-  {q: "தொலைபேசி", options: ["Computer", "Television", "Phone", "Watch"], a: 2},
-  {q: "கடிகாரம்", options: ["Watch", "Clock", "Calendar", "Map"], a: 1},
-  {q: "புத்தகப் பை", options: ["Lunch box", "School bag", "Wallet", "Shoes"], a: 1},
-  {q: "காலணி", options: ["Shirt", "Pant", "Shoes", "Cap"], a: 2},
-  {q: "விசிறி", options: ["Fan", "AC", "Heater", "Light"], a: 0},
-  {q: "மழை", options: ["Snow", "Rain", "Wind", "Sun"], a: 1},
-  {q: "பனி", options: ["Rain", "Snow", "Fog", "Hail"], a: 1},
-  {q: "குளிர்", options: ["Hot", "Cold", "Warm", "Cool"], a: 1},
-  {q: "சூடு", options: ["Cold", "Hot", "Mild", "Freezing"], a: 1},
-  {q: "இனிப்பு", options: ["Spicy", "Sour", "Sweet", "Bitter"], a: 2},
-  {q: "புளிப்பு", options: ["Sweet", "Sour", "Salty", "Bitter"], a: 1},
-  {q: "காரம்", options: ["Sweet", "Spicy", "Sour", "Salty"], a: 1},
-  {q: "உவர்ப்பு", options: ["Sweet", "Salty", "Sour", "Bitter"], a: 1},
-  {q: "கசப்பு", options: ["Sweet", "Bitter", "Salty", "Spicy"], a: 1},
-  // Continue adding more to reach 100...
-].concat(Array(50).fill(null).map((_, i) => ({
-  q: `வார்த்தை ${i + 51}`,
-  options: ["பொருள் A", "சரியான பொருள்", "பொருள் C", "பொருள் D"],
-  a: 1
-}))); // Placeholder to make it 100+
+  {q:"நீர்",options:["Water","Fire","Air","Earth"],a:0},
+  {q:"அக்கா",options:["Mother","Sister","Brother","Father"],a:1},
+  {q:"புத்தகம்",options:["Pen","Book","Bag","Table"],a:1},
+  {q:"வீடு",options:["School","Temple","House","Shop"],a:2},
+  {q:"மரம்",options:["Flower","Tree","Fruit","Leaf"],a:1},
+  {q:"சூரியன்",options:["Moon","Star","Sun","Cloud"],a:2},
+  {q:"பறவை",options:["Fish","Bird","Animal","Insect"],a:1},
+  {q:"கண்",options:["Ear","Nose","Eye","Mouth"],a:2},
+  {q:"பால்",options:["Water","Tea","Milk","Juice"],a:2},
+  {q:"நிலா",options:["Sun","Moon","Star","Planet"],a:1},
+  {q:"ஆறு",options:["Mountain","River","Lake","Sea"],a:1},
+  {q:"பூ",options:["Leaf","Fruit","Flower","Root"],a:2},
+  {q:"கை",options:["Leg","Hand","Head","Neck"],a:1},
+  {q:"வானம்",options:["Earth","Sky","Water","Fire"],a:1},
+  {q:"உப்பு",options:["Sugar","Salt","Chilli","Oil"],a:1},
+  {q:"மீன்",options:["Bird","Fish","Snake","Dog"],a:1},
+  {q:"காற்று",options:["Water","Fire","Wind","Soil"],a:2},
+  {q:"தீ",options:["Water","Fire","Air","Earth"],a:1},
+  {q:"பள்ளி",options:["Home","School","Hospital","Market"],a:1},
+  {q:"கோயில்",options:["Church","Temple","Mosque","School"],a:1},
+  {q:"அம்மா",options:["Father","Mother","Sister","Grandma"],a:1},
+  {q:"அப்பா",options:["Mother","Father","Brother","Uncle"],a:1},
+  {q:"நண்பன்",options:["Enemy","Friend","Teacher","Doctor"],a:1},
+  {q:"மலை",options:["Hill","River","Plain","Forest"],a:0},
+  {q:"கடல்",options:["River","Lake","Ocean","Pond"],a:2},
+  {q:"பழம்",options:["Vegetable","Fruit","Grain","Leaf"],a:1},
+  {q:"காய்கறி",options:["Fruit","Vegetable","Meat","Fish"],a:1},
+  {q:"பசு",options:["Goat","Cow","Horse","Elephant"],a:1},
+  {q:"நாய்",options:["Cat","Dog","Tiger","Lion"],a:1},
+  {q:"பூனை",options:["Dog","Cat","Rat","Rabbit"],a:1},
+  {q:"சக்கரம்",options:["Wheel","Door","Window","Roof"],a:0},
+  {q:"விளக்கு",options:["Fan","Light","Table","Chair"],a:1},
+  {q:"பேனா",options:["Pencil","Pen","Book","Ruler"],a:1},
+  {q:"மேசை",options:["Chair","Table","Bed","Cupboard"],a:1},
+  {q:"நாற்காலி",options:["Table","Chair","Sofa","Bed"],a:1},
+  {q:"கணினி",options:["Radio","Television","Computer","Phone"],a:2},
+  {q:"தொலைபேசி",options:["Computer","TV","Phone","Watch"],a:2},
+  {q:"கடிகாரம்",options:["Watch","Clock","Calendar","Map"],a:1},
+  {q:"புத்தகப் பை",options:["Lunch box","School bag","Wallet","Shoes"],a:1},
+  {q:"காலணி",options:["Shirt","Pant","Shoes","Cap"],a:2},
+  {q:"விசிறி",options:["Fan","AC","Heater","Light"],a:0},
+  {q:"மழை",options:["Snow","Rain","Wind","Sun"],a:1},
+  {q:"பனி",options:["Rain","Snow","Fog","Hail"],a:1},
+  {q:"குளிர்",options:["Hot","Cold","Warm","Cool"],a:1},
+  {q:"சூடு",options:["Cold","Hot","Mild","Freezing"],a:1},
+  {q:"இனிப்பு",options:["Spicy","Sour","Sweet","Bitter"],a:2},
+  {q:"புளிப்பு",options:["Sweet","Sour","Salty","Bitter"],a:1},
+  {q:"காரம்",options:["Sweet","Spicy","Sour","Salty"],a:1},
+  {q:"உவர்ப்பு",options:["Sweet","Salty","Sour","Bitter"],a:1},
+  {q:"கசப்பு",options:["Sweet","Bitter","Salty","Spicy"],a:1},
+  {q:"ஆசிரியர்",options:["Student","Teacher","Doctor","Driver"],a:1},
+  {q:"மருத்துவர்",options:["Teacher","Doctor","Engineer","Pilot"],a:1},
+  {q:"விவசாயி",options:["Teacher","Farmer","Doctor","Policeman"],a:1},
+  {q:"காவலர்",options:["Thief","Policeman","Soldier","Fireman"],a:1},
+  {q:"தீயணைப்பு வீரர்",options:["Fireman","Policeman","Doctor","Teacher"],a:0},
+  {q:"பொம்மை",options:["Toy","Book","Food","Clothes"],a:0},
+  {q:"பந்து",options:["Bat","Ball","Racket","Shuttle"],a:1},
+  {q:"விளையாட்டு",options:["Study","Work","Game","Sleep"],a:2},
+  {q:"பாட்டு",options:["Dance","Song","Story","Picture"],a:1},
+  {q:"நடனம்",options:["Song","Dance","Run","Jump"],a:1},
+  {q:"ஓட்டம்",options:["Walk","Run","Sit","Sleep"],a:1},
+  {q:"தூக்கம்",options:["Wake","Sleep","Eat","Play"],a:1},
+  {q:"சாப்பாடு",options:["Water","Food","Sleep","Play"],a:1},
+  {q:"குடும்பம்",options:["Friend","Family","School","Office"],a:1},
+  {q:"பிறந்தநாள்",options:["Wedding","Birthday","Festival","Exam"],a:1},
+  {q:"பண்டிகை",options:["Holiday","Festival","Work","Study"],a:1},
+  {q:"புத்தாண்டு",options:["New Year","Old Year","Birthday","Wedding"],a:0},
+  {q:"கிறிஸ்துமஸ்",options:["Diwali","Christmas","Pongal","Ramzan"],a:1},
+  {q:"பொங்கல்",options:["Diwali","Pongal","Onam","Holi"],a:1},
+  {q:"தீபாவளி",options:["Diwali","Christmas","Pongal","New Year"],a:0},
+  {q:"வணக்கம்",options:["Hello","Goodbye","Thank you","Sorry"],a:0},
+  {q:"நன்றி",options:["Please","Thank you","Sorry","Hello"],a:1},
+  {q:"மன்னிக்கவும்",options:["Thank you","Sorry","Please","Hello"],a:1},
+  {q:"வருகிறேன்",options:["I'm coming","I'm going","I'm eating","I'm sleeping"],a:0},
+  {q:"போகிறேன்",options:["Coming","Going","Eating","Sleeping"],a:1},
+  {q:"சாப்பிடு",options:["Drink","Eat","Sleep","Play"],a:1},
+  {q:"தூங்கு",options:["Wake","Sleep","Run","Study"],a:1},
+  {q:"படி",options:["Play","Study","Eat","Sleep"],a:1},
+  {q:"விளையாடு",options:["Study","Play","Work","Sleep"],a:1},
+  {q:"வா",options:["Come","Go","Sit","Stand"],a:0},
+  {q:"போ",options:["Come","Go","Sit","Stand"],a:1},
+  {q:"உட்கார்",options:["Stand","Sit","Run","Jump"],a:1},
+  {q:"நில்",options:["Sit","Stand","Lie down","Jump"],a:1},
+  {q:"எழுந்திரு",options:["Sleep","Wake up","Sit","Stand"],a:1},
+  {q:"புன்னகை",options:["Cry","Smile","Shout","Sleep"],a:1},
+  {q:"அழு",options:["Laugh","Cry","Smile","Shout"],a:1},
+  {q:"சிரி",options:["Cry","Laugh","Shout","Sleep"],a:1},
+  {q:"கோபம்",options:["Happy","Angry","Sad","Sleep"],a:1},
+  {q:"மகிழ்ச்சி",options:["Sad","Happy","Angry","Tired"],a:1},
+  {q:"பயம்",options:["Brave","Fear","Happy","Angry"],a:1},
+  {q:"பசி",options:["Thirst","Hunger","Sleep","Play"],a:1},
+  {q:"தாகம்",options:["Hunger","Thirst","Tired","Cold"],a:1},
+  {q:"களைப்பு",options:["Energy","Tired","Happy","Sad"],a:1},
+  {q:"இசை",options:["Noise","Music","Dance","Picture"],a:1},
+  {q:"ஓவியம்",options:["Music","Painting","Dance","Story"],a:1},
+  {q:"கதை",options:["Song","Story","Game","Picture"],a:1},
+  {q:"கணிதம்",options:["Tamil","Maths","Science","English"],a:1},
+  {q:"அறிவியல்",options:["Maths","Science","History","Art"],a:1},
+  {q:"வரலாறு",options:["Future","History","Geography","Biology"],a:1},
+  {q:"புவியியல்",options:["History","Geography","Physics","Chemistry"],a:1}
+];
 
 let currentQuestions = [];
 let currentQuestionIndex = 0;
@@ -230,11 +216,7 @@ let timer;
 let timeLeft = 30;
 
 function startGame() {
-  // Pick 10 random unique questions
-  currentQuestions = [...questionBank]
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 10);
-
+  currentQuestions = [...questionBank].sort(() => 0.5 - Math.random()).slice(0, 10);
   currentQuestionIndex = 0;
   score = 0;
   document.getElementById("score").textContent = score;
@@ -254,22 +236,20 @@ function showQuestion() {
 
   const q = currentQuestions[currentQuestionIndex];
   document.getElementById("questionText").textContent = q.q;
-  
+
   const optionsDiv = document.getElementById("options");
   optionsDiv.innerHTML = "";
 
   q.options.forEach((opt, i) => {
     const btn = document.createElement("button");
     btn.textContent = opt;
+    btn.dataset.index = i; // This line was missing before → fixed!
     btn.onclick = () => selectAnswer(i, btn);
     optionsDiv.appendChild(btn);
   });
 
-  // Update progress bar
-  document.getElementById("progressBar").style.width = 
-    ((currentQuestionIndex + 1) / currentQuestions.length) * 100 + "%";
+  document.getElementById("progressBar").style.width = ((currentQuestionIndex + 1) / 10) * 100 + "%";
 
-  // Reset and start timer
   timeLeft = 30;
   document.getElementById("timer").textContent = timeLeft;
   clearInterval(timer);
@@ -278,7 +258,7 @@ function showQuestion() {
     document.getElementById("timer").textContent = timeLeft;
     if (timeLeft <= 0) {
       clearInterval(timer);
-      selectAnswer(-1, null); // Time's up
+      selectAnswer(-1, null);
     }
   }, 1000);
 }
@@ -287,47 +267,37 @@ function selectAnswer(selectedIndex, button) {
   clearInterval(timer);
   const correctIndex = currentQuestions[currentQuestionIndex].a;
 
-  // Disable all buttons
-  document.querySelectorAll("#options button").forEach(btn => {
+  document.querySelectorAll("#options button").forEach((btn, i) => {
     btn.disabled = true;
-    if (parseInt(btn.dataset.index) === correctIndex) {
-      btn.classList.add("correct");
-    }
+    if (i === correctIndex) btn.classList.add("correct");
+    else if (i === selectedIndex && selectedIndex !== correctIndex) btn.classList.add("wrong");
   });
 
   if (selectedIndex === correctIndex) {
     score += 10;
     document.getElementById("score").textContent = score;
-    if (button) button.classList.add("correct");
-  } else if (button) {
-    button.classList.add("wrong");
   }
 
   setTimeout(() => {
     currentQuestionIndex++;
     showQuestion();
-  }, 1500);
+  }, 1600);
 }
 
 function endGame() {
   clearInterval(timer);
   document.getElementById("gameScreen").classList.add("hidden");
   document.getElementById("gameOverScreen").classList.remove("hidden");
-
   document.getElementById("finalScore").textContent = score + "/100";
 
   let comment = "";
-  if (score >= 90) comment = "அற்புதம்! நீங்கள் தமிழ் மேதை! 🌟";
-  else if (score >= 70) comment = "மிக அருமை! மீண்டும் வா! 👏";
-  else if (score >= 50) comment = "நன்றாக உள்ளது! தொடர்ந்து பயிற்சி செய்! 💪";
-  else comment = "மீண்டும் முயற்சி செய்! நீங்கள் முன்னேறுவீர்கள்! 🔥";
+  if (score >= 90) comment = "அற்புதம்! நீங்கள் தமிழ் மேதை!";
+  else if (score >= 70) comment = "மிக அருமை! தொடர்ந்து பயிற்சி செய்யுங்கள்!";
+  else if (score >= 50) comment = "நன்றாக உள்ளது! இன்னும் கொஞ்சம் முயற்சி!";
+  else comment = "கவலை இல்லை! மீண்டும் முயற்சி செய்யுங்கள்!";
 
   document.getElementById("comment").textContent = comment;
 }
-
-// Start with start screen
-document.getElementById("startScreen").classList.remove("hidden");
-
 </script>
 </body>
-  </html>
+</html>
